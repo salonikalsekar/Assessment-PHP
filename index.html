@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Quantum Networks</title>
+<head>
+	<meta charset="UTF-8">
+	<title>Quantum Networks</title>
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="public/css/styles.css">
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/getRowsFromDB.js"></script>
+	<script type="text/javascript" src="js/itemLookup.js"></script>
+	<script type="text/javascript" src="js/insertIntoDB.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="col-lg-6">
+			<div class="panel panel-default" id="inputPanel">
+				<div class="panel-heading">
+					<h2 class="text-center">Local DB</h2>
+				</div>
+
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table id="myTable" class="table">
+							<thead>
+								<tr>
+									<th>ASIN</th>
+									<th>Title</th>
+									<th>MPN</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="panel panel-default" id="inputPanel">
+				<div class="panel-heading">
+					<h2 class="text-center">Amazon API</h2>
+				</div>
+				<div class="panel-body">
+					<form onsubmit="event.preventDefault(); itemLookup($('#ASIN').val());">
+
+						<!-- Input -->
+						<div class="form-group text-center">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-search"></span>
+								</div>
+								<input type="text" name="ASIN" id="ASIN" class="form-control input-lg" placeholder="" autofocus>
+							</div>
+						</div>
+
+						<!-- Button -->
+						<div class="form-group form-inline text-center">
+							<input type="submit" name="submit" id="requestBtn" class="btn btn-success" value="MAKE API REQUEST">
+						</div>
+
+					</form>
+
+					<div class="table-responsive">
+						<table id="myTable2" class="table displayNone">
+							<thead>
+								<tr>
+									<th>ASIN</th>
+									<th>Title</th>
+									<th>MPN</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="resultRow"></tr>
+								
+							</tbody>
+						</table>
+					</div>
+
+					<form onsubmit="event.preventDefault(); insertIntoDB($('#td_ASIN').html(), $('#td_Title').html(), $('#td_MPN').html(), $('#td_Price').html());">
+						
+						<!-- Button -->
+						<div class="text-center">
+							<input type="submit" name="submit" id="insertBtn" class="btn btn-success displayNone" value="INSERT INTO DB">
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+	<script>
+		$(document).ready(function(){
+			getRowsFromDB();
+		});
+	</script>
+</html>
